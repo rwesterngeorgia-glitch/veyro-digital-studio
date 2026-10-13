@@ -1,0 +1,52 @@
+[
+  {
+    "path": "/",
+    "title": "Veyro | Websites, Business Software & Automation",
+    "description": "Veyro builds professional websites, custom business software and automations for small businesses. Based in Philadelphia and working remotely across the US."
+  },
+  {
+    "path": "/services",
+    "title": "Services & Starting Prices | Veyro",
+    "description": "Explore Veyro’s web design, custom business applications, automation and maintenance services, with transparent starting prices."
+  },
+  {
+    "path": "/work",
+    "title": "Our Work — Websites & Interactive Software Concepts | Veyro",
+    "description": "Explore three real portfolio demonstrations: Liberty Shine Cleaning, Ember & Olive and StockPilot. See the websites and try the interactive software."
+  },
+  {
+    "path": "/work/liberty-shine",
+    "title": "Liberty Shine Cleaning — Website Concept | Veyro",
+    "description": "A Philadelphia-inspired cleaning website concept with an editorial identity, responsive service pages and a clear demo quote experience."
+  },
+  {
+    "path": "/work/ember-and-olive",
+    "title": "Ember & Olive — Restaurant Website & Dashboard | Veyro",
+    "description": "A fictional Mediterranean restaurant concept combining premium web design, a digital menu, demo reservations and an interactive management studio."
+  },
+  {
+    "path": "/work/stockpilot",
+    "title": "StockPilot — Inventory Software Concept | Veyro",
+    "description": "An interactive hospitality inventory concept featuring stock workflows, partial purchase deliveries, recipe costing, waste tracking and operational reporting."
+  },
+  {
+    "path": "/industries",
+    "title": "Digital Solutions for Growing Businesses | Veyro",
+    "description": "Practical websites and software for restaurants, cleaning companies, contractors, retailers and other growing businesses."
+  },
+  {
+    "path": "/about",
+    "title": "About Veyro — A Philadelphia Digital Studio",
+    "description": "Veyro builds websites, custom business software and automations for small businesses. Learn how we plan, build and support your project."
+  },
+  {
+    "path": "/contact",
+    "title": "Get a Quote | Veyro",
+    "description": "Tell Veyro about your website, business software or automation project. Email veyro350@gmail.com directly or use the optional inquiry draft helper."
+  },
+  {
+    "path": "/privacy",
+    "title": "Privacy Policy | Veyro Digital Studio",
+    "description": "How Veyro handles email inquiries, the optional draft helper, website hosting and external portfolio demonstrations."
+  }
+]
