@@ -65,7 +65,8 @@ await fs.writeFile(
     ? "User-agent: *\nDisallow: /\n"
     : `User-agent: *\nAllow: /\nSitemap: ${site.canonicalOrigin}/sitemap.xml\n`,
 );
-await fs.writeFile('dist/_redirects',site.previewMode ? '' : 'https://www.veyro350.com/* https://veyro350.com/:splat 301\n');
+// Hostname redirects are managed by Cloudflare's zone redirect rule.
+await fs.writeFile('dist/_redirects','');
 await fs.writeFile(
   "dist/_headers",
   `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: DENY\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src 'self'; script-src 'self' ${schemaHash}; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'\n${site.previewMode ? "  X-Robots-Tag: noindex, nofollow\n" : ""}\n/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n`,
