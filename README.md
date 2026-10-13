@@ -8,7 +8,7 @@ Use Node.js 22.12+ or 24. Run `npm ci`, `npm run lint`, `npm run build`, `npm ru
 
 Development: `npm run dev`. Production static output: `dist/`. Cloudflare Pages serves the full prerendered marketing pages, route metadata, 404 page, robots/sitemap, security headers and canonical redirects. No server runtime, analytics or paid integrations are required.
 
-The canonical domain is https://veyro350.com. `src/config/site.json` owns contact information, indexing mode and pricing. Maintenance and custom software use a custom quote. Set previewMode to true for a deliberately excluded preview; production uses false.
+The canonical domain is https://veyro350.com. Cloudflare's zone redirect rule sends www requests to the apex while preserving paths and query strings. `src/config/site.json` owns contact information, indexing mode and pricing. Maintenance and custom software use a custom quote. Set previewMode to true for a deliberately excluded preview; production uses false.
 
 Portfolio demos are fictional concepts, not paid client commissions. Their management tools store only browser-local fictional data and have no production authentication or backend. Asset/photo/font credits are retained under `docs/credits`.
 
