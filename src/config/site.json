@@ -1,0 +1,52 @@
+{
+  "name": "Veyro",
+  "fullName": "Veyro Digital Studio",
+  "email": "veyro350@gmail.com",
+  "canonicalOrigin": "https://veyro350.com",
+  "location": "Philadelphia, Pennsylvania",
+  "instagram": "https://www.instagram.com/veyro.350/",
+  "facebook": "https://www.facebook.com/profile.php?id=61595187455667",
+  "previewMode": false,
+  "pricing": [
+    {
+      "name": "Business Website",
+      "price": "$699",
+      "prefix": "Starting at",
+      "details": "A professional business website with essential pages and a mobile-friendly layout.",
+      "type": "website",
+      "id": "business-website"
+    },
+    {
+      "name": "Advanced Website",
+      "price": "$1,299",
+      "prefix": "Starting at",
+      "details": "A larger website with additional pages, content or custom features.",
+      "type": "website",
+      "id": "advanced-website"
+    },
+    {
+      "name": "Custom Business Software",
+      "price": "Custom quote",
+      "prefix": "Priced for your project",
+      "details": "An inventory system, dashboard or business tool built around your requirements.",
+      "type": "software",
+      "id": "custom-software"
+    },
+    {
+      "name": "Automation & Integration",
+      "price": "$499",
+      "prefix": "Starting at",
+      "details": "A tested workflow that connects your tools or handles a repetitive task.",
+      "type": "automation",
+      "id": "automation"
+    },
+    {
+      "name": "Maintenance",
+      "price": "Custom quote",
+      "prefix": "",
+      "details": "An agreed monthly plan for updates, content changes and technical support.",
+      "type": "support",
+      "id": "maintenance"
+    }
+  ]
+}

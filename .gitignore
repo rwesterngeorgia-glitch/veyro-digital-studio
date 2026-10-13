@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.reference/
+.preview-pid
+.env*
+!.env.example
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+.wrangler/
+docs/*results*.json
+docs/*server*.log
+docs/screenshots/

@@ -1,0 +1,128 @@
+{
+  "liberty-shine": {
+    "home": {
+      "src": "/portfolio/liberty-shine/home.webp",
+      "srcSet": "/portfolio/liberty-shine/home-800.webp 800w, /portfolio/liberty-shine/home.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "mobile": {
+      "src": "/portfolio/liberty-shine/mobile.webp",
+      "srcSet": "",
+      "width": 390,
+      "height": 844
+    },
+    "services": {
+      "src": "/portfolio/liberty-shine/services.webp",
+      "srcSet": "/portfolio/liberty-shine/services-800.webp 800w, /portfolio/liberty-shine/services.webp 1440w",
+      "width": 1440,
+      "height": 2898
+    },
+    "contact": {
+      "src": "/portfolio/liberty-shine/contact.webp",
+      "srcSet": "/portfolio/liberty-shine/contact-800.webp 800w, /portfolio/liberty-shine/contact.webp 1440w",
+      "width": 1440,
+      "height": 1212
+    },
+    "detail": {
+      "src": "/portfolio/liberty-shine/detail.webp",
+      "srcSet": "/portfolio/liberty-shine/detail-800.webp 800w, /portfolio/liberty-shine/detail.webp 1440w",
+      "width": 1440,
+      "height": 2181
+    },
+    "presentation": {
+      "src": "/portfolio/liberty-shine/presentation.webp",
+      "srcSet": "/portfolio/liberty-shine/presentation-800.webp 800w, /portfolio/liberty-shine/presentation.webp 1600w",
+      "width": 1600,
+      "height": 900
+    }
+  },
+  "ember-and-olive": {
+    "home": {
+      "src": "/portfolio/ember-and-olive/home.webp",
+      "srcSet": "/portfolio/ember-and-olive/home-800.webp 800w, /portfolio/ember-and-olive/home.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "mobile": {
+      "src": "/portfolio/ember-and-olive/mobile.webp",
+      "srcSet": "",
+      "width": 390,
+      "height": 844
+    },
+    "menu": {
+      "src": "/portfolio/ember-and-olive/menu.webp",
+      "srcSet": "/portfolio/ember-and-olive/menu-800.webp 800w, /portfolio/ember-and-olive/menu.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "dashboard": {
+      "src": "/portfolio/ember-and-olive/dashboard.webp",
+      "srcSet": "/portfolio/ember-and-olive/dashboard-800.webp 800w, /portfolio/ember-and-olive/dashboard.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "editor": {
+      "src": "/portfolio/ember-and-olive/editor.webp",
+      "srcSet": "/portfolio/ember-and-olive/editor-800.webp 800w, /portfolio/ember-and-olive/editor.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "scheduling": {
+      "src": "/portfolio/ember-and-olive/scheduling.webp",
+      "srcSet": "/portfolio/ember-and-olive/scheduling-800.webp 800w, /portfolio/ember-and-olive/scheduling.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "reservations": {
+      "src": "/portfolio/ember-and-olive/reservations.webp",
+      "srcSet": "/portfolio/ember-and-olive/reservations-800.webp 800w, /portfolio/ember-and-olive/reservations.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    }
+  },
+  "stockpilot": {
+    "home": {
+      "src": "/portfolio/stockpilot/home.webp",
+      "srcSet": "/portfolio/stockpilot/home-800.webp 800w, /portfolio/stockpilot/home.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "landing": {
+      "src": "/portfolio/stockpilot/landing.webp",
+      "srcSet": "/portfolio/stockpilot/landing-800.webp 800w, /portfolio/stockpilot/landing.webp 1440w",
+      "width": 1440,
+      "height": 2592
+    },
+    "mobile": {
+      "src": "/portfolio/stockpilot/mobile.webp",
+      "srcSet": "",
+      "width": 390,
+      "height": 844
+    },
+    "inventory": {
+      "src": "/portfolio/stockpilot/inventory.webp",
+      "srcSet": "/portfolio/stockpilot/inventory-800.webp 800w, /portfolio/stockpilot/inventory.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "purchasing": {
+      "src": "/portfolio/stockpilot/purchasing.webp",
+      "srcSet": "/portfolio/stockpilot/purchasing-800.webp 800w, /portfolio/stockpilot/purchasing.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "recipes": {
+      "src": "/portfolio/stockpilot/recipes.webp",
+      "srcSet": "/portfolio/stockpilot/recipes-800.webp 800w, /portfolio/stockpilot/recipes.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    },
+    "waste": {
+      "src": "/portfolio/stockpilot/waste.webp",
+      "srcSet": "/portfolio/stockpilot/waste-800.webp 800w, /portfolio/stockpilot/waste.webp 1440w",
+      "width": 1440,
+      "height": 1000
+    }
+  }
+}
