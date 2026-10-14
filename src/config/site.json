@@ -7,6 +7,11 @@
   "instagram": "https://www.instagram.com/veyro.350/",
   "facebook": "https://www.facebook.com/profile.php?id=61595187455667",
   "previewMode": false,
+  "launchOffer": {
+    "active": true,
+    "price": "$300",
+    "clientLimit": 10
+  },
   "pricing": [
     {
       "name": "Business Website",

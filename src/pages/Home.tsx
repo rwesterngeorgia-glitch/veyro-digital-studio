@@ -10,11 +10,24 @@ import { projects } from "../data/projects";
 import { processSteps } from "../data/studio";
 import site from "../config/site.json";
 import { ArrowUpRight } from "lucide-react";
+import { LaunchOffer } from "../components/LaunchOffer";
 
 const heroServices = [
-  { title: "Business websites", to: "/services#web-design", description: "A new website or a better version of the one you have." },
-  { title: "Business software", to: "/services#business-software", description: "A tool for your team, built around the way you work." },
-  { title: "Automation", to: "/services#automation", description: "Connect your apps and cut down on repetitive tasks." },
+  {
+    title: "Business websites",
+    to: "/services#web-design",
+    description: "A new website or a better version of the one you have.",
+  },
+  {
+    title: "Business software",
+    to: "/services#business-software",
+    description: "A tool for your team, built around the way you work.",
+  },
+  {
+    title: "Automation",
+    to: "/services#automation",
+    description: "Connect your apps and cut down on repetitive tasks.",
+  },
 ];
 
 const offers = [
@@ -25,7 +38,7 @@ const offers = [
     example: "Business pages, menus, service details and quote forms.",
     icon: "web",
     path: "web-design",
-    price: site.pricing.find(plan=>plan.id === "business-website"),
+    price: site.pricing.find((plan) => plan.id === "business-website"),
   },
   {
     title: "Custom business software",
@@ -34,7 +47,7 @@ const offers = [
     example: "Inventory systems, staff tools and business dashboards.",
     icon: "software",
     path: "business-software",
-    price: site.pricing.find(plan=>plan.id === "custom-software"),
+    price: site.pricing.find((plan) => plan.id === "custom-software"),
   },
   {
     title: "Business automation",
@@ -43,7 +56,7 @@ const offers = [
     example: "Inquiry follow-ups, notifications and data updates.",
     icon: "automation",
     path: "automation",
-    price: site.pricing.find(plan=>plan.id === "automation"),
+    price: site.pricing.find((plan) => plan.id === "automation"),
   },
 ];
 
@@ -67,9 +80,7 @@ export function Home() {
             </p>
             <div className="button-group">
               <ButtonLink to="/contact">Get in touch</ButtonLink>
-              <TextLink to="/work">
-                See our work
-              </TextLink>
+              <TextLink to="/work">See our work</TextLink>
             </div>
             <p className="simple-hero-location">
               Based in Philadelphia. Working with businesses across the US.
@@ -78,16 +89,26 @@ export function Home() {
           <nav className="hero-services" aria-label="Explore our services">
             <h2>What do you need help with?</h2>
             <div className="hero-services-list">
-              {heroServices.map(service => (
-                <Link className="hero-service-link" key={service.to} to={service.to}>
-                  <span className="hero-service-name">{service.title}<ArrowUpRight size={20} aria-hidden="true" /></span>
-                  <span className="hero-service-summary">{service.description}</span>
+              {heroServices.map((service) => (
+                <Link
+                  className="hero-service-link"
+                  key={service.to}
+                  to={service.to}
+                >
+                  <span className="hero-service-name">
+                    {service.title}
+                    <ArrowUpRight size={20} aria-hidden="true" />
+                  </span>
+                  <span className="hero-service-summary">
+                    {service.description}
+                  </span>
                 </Link>
               ))}
             </div>
           </nav>
         </div>
       </section>
+      <LaunchOffer />
       <section
         className="home-offers container"
         aria-labelledby="home-services-title"
@@ -104,9 +125,13 @@ export function Home() {
               <p>{offer.description}</p>
               <p className="offer-examples">{offer.example}</p>
               <p className="offer-price">
-                {!offer.price || offer.price.type === "software"
-                  ? "Custom quote"
-                  : "Starting at " + offer.price.price}
+                {site.launchOffer.active
+                  ? offer.path === "web-design"
+                    ? `${site.launchOffer.price} simple website · Launch offer`
+                    : "Launch pricing · Custom quote"
+                  : !offer.price || offer.price.type === "software"
+                    ? "Custom quote"
+                    : "Starting at " + offer.price.price}
               </p>
               <TextLink to={"/services#" + offer.path}>
                 View service details
@@ -122,7 +147,11 @@ export function Home() {
             </Link>
             .
           </p>
-          <p>Example starting prices. Your quote depends on the project.</p>
+          <p>
+            {site.launchOffer.active
+              ? `Launch pricing is available to our first ${site.launchOffer.clientLimit} clients. Your quote depends on the project.`
+              : "Example starting prices. Your quote depends on the project."}
+          </p>
         </div>
       </section>
       <section className="selected-work container" id="selected-work">

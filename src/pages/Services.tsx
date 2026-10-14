@@ -8,6 +8,8 @@ import {
 } from "../components/UI";
 import { Pricing } from "../components/Pricing";
 import { services } from "../data/studio";
+import { LaunchOffer } from "../components/LaunchOffer";
+import site from "../config/site.json";
 export function Services() {
   return (
     <>
@@ -17,7 +19,10 @@ export function Services() {
         description="Choose a website, custom business software, automation or ongoing website support. We’ll help you work out what your business needs."
       >
         <a className="text-link" href="#pricing">
-          View starting prices <ArrowDown size={17} aria-hidden="true" />
+          {site.launchOffer.active
+            ? "View launch pricing"
+            : "View starting prices"}{" "}
+          <ArrowDown size={17} aria-hidden="true" />
         </a>
       </PageIntro>
       <div className="service-jump container">
@@ -27,6 +32,7 @@ export function Services() {
           </a>
         ))}
       </div>
+      <LaunchOffer />
       <section
         className="service-details container"
         aria-label="Service details"
