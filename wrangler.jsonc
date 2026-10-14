@@ -2,5 +2,5 @@
   "name": "veyro-digital-studio",
   "pages_build_output_dir": "dist",
   "compatibility_date": "2026-10-14",
-  "service_bindings": [{ "binding": "CONTACT_DELIVERY", "service": "veyro-inquiries" }]
+  "services": [{ "binding": "CONTACT_DELIVERY", "service": "veyro-inquiries" }]
 }

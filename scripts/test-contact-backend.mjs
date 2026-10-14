@@ -1,5 +1,9 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
 import { createServer } from 'vite';
+const deployment=JSON.parse(await fs.readFile('wrangler.jsonc','utf8'));
+assert(deployment.services?.some(binding=>binding.binding==='CONTACT_DELIVERY'&&binding.service==='veyro-inquiries'),'Pages must declare its delivery service under Wrangler services.');
+assert(!('service_bindings' in deployment),'Reject unsupported Pages configuration fields.');
 const server=await createServer({server:{middlewareMode:true},appType:'custom'});
 try {
  const {handleInquiry,default:worker}=await server.ssrLoadModule('/workers/contact.ts');
