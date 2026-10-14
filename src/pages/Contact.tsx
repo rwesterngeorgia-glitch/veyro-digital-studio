@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { ArrowUpRight, ArrowRight, Mail, Instagram } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Mail, Instagram, Facebook } from "lucide-react";
 import { PageIntro } from "../components/UI";
 import { Turnstile } from "../components/Turnstile";
 import {
@@ -183,6 +183,7 @@ export function Contact() {
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
             <a href={site.facebook} target="_blank" rel="noopener noreferrer">
+              <Facebook size={17} aria-hidden="true" />
               Facebook
               <ArrowUpRight size={15} aria-hidden="true" />
               <span className="sr-only"> (opens in a new tab)</span>
