@@ -1,7 +1,7 @@
 {
   "name": "Veyro",
   "fullName": "Veyro Digital Studio",
-  "email": "veyro350@gmail.com",
+  "email": "hello@veyro350.com",
   "canonicalOrigin": "https://veyro350.com",
   "location": "Philadelphia, Pennsylvania",
   "instagram": "https://www.instagram.com/veyro.350/",
@@ -53,5 +53,6 @@
       "type": "support",
       "id": "maintenance"
     }
-  ]
+  ],
+  "turnstileSiteKey": "0x4AAAAAAFXCo6V85KOO_Ty9"
 }

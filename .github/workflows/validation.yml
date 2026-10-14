@@ -20,6 +20,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
+      - run: node scripts/test-contact-backend.mjs
       - run: npm run build
       - run: npm audit --audit-level=high
       - run: npx playwright install --with-deps chromium

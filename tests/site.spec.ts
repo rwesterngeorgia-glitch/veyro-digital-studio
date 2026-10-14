@@ -4,6 +4,26 @@ import routes from "../src/config/routes.json" with { type: "json" };
 import site from "../src/config/site.json" with { type: "json" };
 import { projects } from "../src/data/projects";
 
+test.beforeEach(async ({ page }) => {
+  await page.route(
+    "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit",
+    (route) =>
+      route.fulfill({
+        contentType: "application/javascript",
+        body: "window.turnstile={render(element,options){queueMicrotask(()=>options.callback('test-turnstile-token'));return 'test-widget';},remove(){}};",
+      }),
+  );
+  await page.route("**/api/inquiry", (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        ok: true,
+        message: "Your inquiry has been sent to Veyro.",
+      }),
+    }),
+  );
+});
+
 for (const viewport of [
   { name: "desktop", width: 1440, height: 1000 },
   { name: "tablet", width: 834, height: 1112 },
@@ -98,7 +118,6 @@ test("desktop navigation, services anchors and pricing links", async ({
     .getByRole("link", { name: "Request a quote" })
     .click();
   await expect(page).toHaveURL(/contact\?project=automation/);
-  await page.locator(".optional-inquiry > summary").click();
   await expect(page.getByLabel("Type of project")).toHaveValue("automation");
 });
 
@@ -180,17 +199,16 @@ test("mobile menu traps focus, closes with Escape and navigates", async ({
   await expect(page.locator(".portfolio-grid article")).toHaveCount(3);
 });
 
-test("contact validation, preview review, draft and no delivery or persistence", async ({
+test("contact validation and delivery send only after valid input and do not persist details", async ({
   page,
 }) => {
-  const sent: string[] = [];
+  const sent: unknown[] = [];
   page.on("request", (request) => {
-    if (["POST", "PUT", "PATCH"].includes(request.method()))
-      sent.push(request.url());
+    if (request.method() === "POST" && request.url().endsWith("/api/inquiry"))
+      sent.push(request.postDataJSON());
   });
   await page.goto("/contact");
-  await page.locator(".optional-inquiry > summary").click();
-  await page.getByRole("button", { name: "Review inquiry" }).click();
+  await page.getByRole("button", { name: "Send inquiry", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText(
     "Please check these details",
   );
@@ -204,45 +222,92 @@ test("contact validation, preview review, draft and no delivery or persistence",
     .getByRole("link", { name: /^Email:/ })
     .click();
   await expect(page.getByLabel("Email *", { exact: true })).toBeFocused();
-  await page.getByLabel("Name *", { exact: true }).fill("Local Reviewer");
+  await page.getByLabel("Name *", { exact: true }).fill("Test Visitor");
   await page.getByLabel("Email *", { exact: true }).fill("invalid");
   await page.getByLabel("Type of project").selectOption("website");
   await page
     .getByLabel("Project details")
-    .fill(
-      "A considered website for a fictional business, using this local review.",
-    );
-  await page.getByRole("button", { name: "Review inquiry" }).click();
+    .fill("A website inquiry for a fictional business used in testing.");
+  await page.getByRole("button", { name: "Send inquiry", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText(
     "Enter a valid email address",
   );
-  await page
-    .getByLabel("Email *", { exact: true })
-    .fill("reviewer@example.com");
+  expect(sent).toEqual([]);
+  await page.getByLabel("Email *", { exact: true }).fill("visitor@example.com");
   await page.getByLabel("Business name").fill("Example Business");
   await page.getByLabel("Budget range").selectOption("$1,000–$2,499");
-  await page.getByRole("button", { name: "Review inquiry" }).click();
+  await page.getByRole("button", { name: "Send inquiry", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "Your inquiry is ready to review." }),
+    page.getByRole("heading", { name: "Your inquiry has been sent." }),
   ).toBeVisible();
-  await expect(page.getByRole("status")).toContainText("not been sent");
-  const mailto = await page
-    .getByRole("link", { name: "Open an email draft" })
-    .getAttribute("href");
-  expect(mailto).toContain("mailto:veyro350@gmail.com?subject=");
-  expect(decodeURIComponent(mailto ?? "")).toContain("Example Business");
-  expect(sent).toEqual([]);
+  await expect(page.getByRole("status")).toContainText(
+    "reply to the email address",
+  );
+  expect(sent).toHaveLength(1);
+  expect(sent[0]).toMatchObject({
+    email: "visitor@example.com",
+    business: "Example Business",
+    project: "website",
+    turnstileToken: "test-turnstile-token",
+  });
   expect(
     await page.evaluate(() => localStorage.length + sessionStorage.length),
   ).toBe(0);
   expect(await page.context().cookies()).toEqual([]);
-  await page.getByRole("button", { name: "Edit inquiry" }).click();
-  await expect(page.getByLabel("Name *", { exact: true })).toHaveValue(
-    "Local Reviewer",
-  );
-  await expect(page.getByLabel("Name *", { exact: true })).toBeFocused();
+  await page.getByRole("button", { name: "Send another message" }).click();
+  await expect(page.getByLabel("Name *", { exact: true })).toHaveValue("");
   await page.reload();
   await expect(page.getByLabel("Name *", { exact: true })).toHaveValue("");
+});
+
+test("delivery errors preserve the inquiry and never show a false success", async ({
+  page,
+}) => {
+  await page.route("**/api/inquiry", (route) =>
+    route.fulfill({
+      status: 503,
+      contentType: "application/json",
+      body: JSON.stringify({ ok: false, message: "Please retry or email us." }),
+    }),
+  );
+  await page.goto("/contact?project=website&offer=launch");
+  await page.getByLabel("Name *", { exact: true }).fill("Test Visitor");
+  await page.getByLabel("Email *", { exact: true }).fill("visitor@example.com");
+  await page
+    .getByLabel("Project details")
+    .fill("A fictional inquiry to check the delivery failure experience.");
+  await page.getByRole("button", { name: "Send inquiry", exact: true }).click();
+  await expect(page.getByRole("alert")).toContainText(
+    "Please retry or email us.",
+  );
+  await expect(
+    page.getByRole("heading", { name: "Your inquiry has been sent." }),
+  ).toHaveCount(0);
+  await expect(page.getByLabel("Name *", { exact: true })).toHaveValue(
+    "Test Visitor",
+  );
+  await expect(page.getByLabel("Budget range")).toHaveValue(
+    "$300 launch offer",
+  );
+});
+
+test("network failure keeps the message and gives a useful retry path", async ({
+  page,
+}) => {
+  await page.route("**/api/inquiry", (route) => route.abort());
+  await page.goto("/contact?project=website");
+  await page.getByLabel("Name *", { exact: true }).fill("Test Visitor");
+  await page.getByLabel("Email *", { exact: true }).fill("visitor@example.com");
+  await page
+    .getByLabel("Project details")
+    .fill("A fictional inquiry to check what happens when the network fails.");
+  await page.getByRole("button", { name: "Send inquiry", exact: true }).click();
+  await expect(page.getByRole("alert")).toContainText(
+    "couldn’t confirm your inquiry was sent",
+  );
+  await expect(page.getByLabel("Project details")).toHaveValue(
+    "A fictional inquiry to check what happens when the network fails.",
+  );
 });
 
 test("unknown paths, skip link, FAQ and reduced motion", async ({ page }) => {
@@ -286,14 +351,16 @@ test("narrow 320px phone has no overflow on every page", async ({ page }) => {
   }
 });
 
-test("only self-hosted resources are requested by the local site", async ({
+test("only self-hosted resources and the approved security check are requested", async ({
   page,
 }) => {
   const external: string[] = [];
   page.on("request", (request) => {
     if (
-      new URL(request.url()).origin !== new URL(process.env.BASE_URL ?? "http://127.0.0.1:5188").origin &&
-      !request.url().startsWith("data:")
+      new URL(request.url()).origin !==
+        new URL(process.env.BASE_URL ?? "http://127.0.0.1:5188").origin &&
+      !request.url().startsWith("data:") &&
+      new URL(request.url()).origin !== "https://challenges.cloudflare.com"
     )
       external.push(request.url());
   });
@@ -345,8 +412,7 @@ test("open dialogs and contact error/review states remain accessible", async ({
   ).toEqual([]);
   await page.keyboard.press("Escape");
   await page.goto("/contact");
-  await page.locator(".optional-inquiry > summary").click();
-  await page.getByRole("button", { name: "Review inquiry" }).click();
+  await page.getByRole("button", { name: "Send inquiry" }).click();
   expect(
     (
       await new AxeBuilder({ page })
@@ -360,9 +426,9 @@ test("open dialogs and contact error/review states remain accessible", async ({
   await page
     .getByLabel("Project details")
     .fill("A demonstration inquiry for a tailored operations workspace.");
-  await page.getByRole("button", { name: "Review inquiry" }).click();
+  await page.getByRole("button", { name: "Send inquiry" }).click();
   await expect(
-    page.getByRole("heading", { name: "Your inquiry is ready to review." }),
+    page.getByRole("heading", { name: "Your inquiry has been sent." }),
   ).toBeVisible();
   expect(
     (

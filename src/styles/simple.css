@@ -992,3 +992,10 @@
 }
 
 .optional-inquiry{border:1px solid var(--line);border-radius:4px;align-self:start}.optional-inquiry>summary{padding:20px;font-size:16px;font-weight:600}.optional-inquiry-body{padding:0 20px 20px}.copy-status{font-size:13px;margin:14px 0}.contact-aside>.button{margin-top:18px}.optional-inquiry .small-note{margin-top:16px}.image-unavailable{padding:25px;font-size:14px}
+.inquiry-panel { border: 1px solid var(--line); padding: 28px; border-radius: 4px; align-self: start; }
+.form-security { margin-top: 22px; max-width: 100%; }
+.form-security > div { min-height: 140px; }
+.form-security > p { font-size: 13px; }
+.inquiry-success h2 { margin-bottom: 16px; }
+.inquiry-success .button { margin-top: 24px; }
+@media (max-width: 600px) { .inquiry-panel { padding: 20px 16px; } }

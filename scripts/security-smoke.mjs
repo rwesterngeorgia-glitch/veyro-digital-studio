@@ -10,6 +10,8 @@ const routes=configured?configured.map(r=>r.path):folder==='out'?['/','/about','
 const server=await serve(folder),origin='http://127.0.0.1:'+server.address().port;
 const browser=await chromium.launch({headless:true,channel:process.env.CI?undefined:'chrome'});
 const page=await browser.newPage(),errors=[];
+// Isolate the security-header check from live anti-bot challenges.
+await page.route('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit',route=>route.fulfill({contentType:'application/javascript',body:"window.turnstile={render(element,options){queueMicrotask(()=>options.callback('smoke-test-token'));return 'smoke-widget';},remove(){}};"}));
 page.on('pageerror',e=>errors.push(e.message));
 await page.addInitScript(()=>document.addEventListener('securitypolicyviolation',event=>{window.__policyErrors??=[];window.__policyErrors.push(event.violatedDirective+': '+event.blockedURI);}));
 try {
