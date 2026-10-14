@@ -1,3 +1,5 @@
+import site from "../config/site.json";
+
 export interface Inquiry {
   name: string;
   email: string;
@@ -17,6 +19,9 @@ export const projectOptions = [
 ];
 export const preferredOptions = ["Email", "Instagram", "Facebook"];
 export const budgetOptions = [
+  ...(site.launchOffer.active
+    ? [`${site.launchOffer.price} launch offer`]
+    : []),
   "Not sure yet",
   "$500–$999",
   "$1,000–$2,499",

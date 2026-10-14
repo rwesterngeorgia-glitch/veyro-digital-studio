@@ -12,6 +12,8 @@ The canonical domain is https://veyro350.com. Cloudflare's zone redirect rule se
 
 Portfolio demos are fictional concepts, not paid client commissions. Their management tools store only browser-local fictional data and have no production authentication or backend. Asset/photo/font credits are retained under `docs/credits`.
 
+The launch campaign is controlled by `launchOffer` in `src/config/site.json`: simple websites cost $300 for the first 10 clients, with custom launch quotes for larger projects. Client eligibility is agreed directly; the site does not invent a remaining-spots count. Set `launchOffer.active` to false when the offer ends to restore the regular prices and remove the campaign sections.
+
 ## Release
 
 Validation runs on pull requests and main. Publish only a reviewed commit with passing validation. Deployment is an explicit Cloudflare release step; the GitHub workflow does not contain deployment credentials or an automatic publish step. Keep the previous Cloudflare deployment ID for rollback. Verify public headers, canonical redirects, deep links, 404, contact actions and social metadata after every release.
