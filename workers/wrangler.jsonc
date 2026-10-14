@@ -1,0 +1,14 @@
+{
+  "name": "veyro-inquiries",
+  "main": "contact.ts",
+  "account_id": "339257631bec5d1d623df99b4d2a8a3c",
+  "compatibility_date": "2026-10-14",
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": false },
+  "send_email": [{ "name": "EMAIL", "destination_address": "veyro350@gmail.com" }],
+  "ratelimits": [
+    { "name": "IP_LIMIT", "namespace_id": "350101", "simple": { "limit": 8, "period": 60 } },
+    { "name": "SEND_LIMIT", "namespace_id": "350102", "simple": { "limit": 30, "period": 60 } }
+  ]
+}

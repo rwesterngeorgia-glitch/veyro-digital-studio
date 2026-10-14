@@ -3,6 +3,7 @@ dist/
 .reference/
 .preview-pid
 .env*
+.dev.vars*
 !.env.example
 playwright-report/
 test-results/

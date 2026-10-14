@@ -53,26 +53,37 @@ export function validateInquiry(inquiry: Inquiry): InquiryErrors {
     errors.preferred = "Choose your preferred contact method.";
   return errors;
 }
-// Preview adapter: no network, logging, browser storage or delivery.
-// Replace with an authorized server endpoint after delivery and error handling are tested.
-export async function prepareInquiry(inquiry: Inquiry) {
-  if (inquiry.website)
-    throw new Error(
-      "This inquiry cannot be reviewed. Please use the direct email link.",
-    );
+export async function sendInquiry(inquiry: Inquiry, turnstileToken: string) {
+  if (inquiry.website) throw new Error("Please use the direct email link.");
   const errors = validateInquiry(inquiry);
   if (Object.keys(errors).length)
     throw new Error("Please check the required fields.");
-  return {
-    kind: "preview" as const,
-    inquiry: {
-      ...inquiry,
-      name: inquiry.name.trim(),
-      email: inquiry.email.trim(),
-      business: inquiry.business.trim(),
-      details: inquiry.details.trim(),
-    },
-  };
+  let response: Response;
+  try {
+    response = await fetch("/api/inquiry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...inquiry, turnstileToken }),
+      signal: AbortSignal.timeout(20000),
+    });
+  } catch {
+    throw new Error(
+      "We couldn’t confirm your inquiry was sent. Please try again or email hello@veyro350.com.",
+    );
+  }
+  let result: { ok?: boolean; message?: string };
+  try {
+    result = await response.json();
+  } catch {
+    throw new Error(
+      "We couldn’t confirm your inquiry was sent. Please try again or email hello@veyro350.com.",
+    );
+  }
+  if (!response.ok || result?.ok !== true)
+    throw new Error(
+      (typeof result?.message === "string" && result.message) ||
+        "Your inquiry could not be sent. Please try again or email us.",
+    );
 }
 export function inquiryText(inquiry: Inquiry) {
   return `Name: ${inquiry.name}\nEmail: ${inquiry.email}\nBusiness: ${inquiry.business || "Not provided"}\nProject: ${projectOptions.find((o) => o.value === inquiry.project)?.label}\nBudget: ${inquiry.budget || "Not provided"}\n\nProject details:\n${inquiry.details}`;
